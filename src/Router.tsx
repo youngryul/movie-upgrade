@@ -8,35 +8,44 @@ interface LayoutProps {
     children: React.ReactNode;
 }
 
-const Layout:React.FC<LayoutProps> = ({children}) => (
-    <>
-        <Header/>
-        {children}
-    </>
-);
-
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <Layout>
+            <>
+                <Header />
                 <Home />
-            </Layout>
+            </>
 
         )
     },
     {
         path: "/coming-soon",
         element: (
-            <ComingSoon/>
+           <>
+               <Header />
+               <ComingSoon />
+           </>
         )
     },
     {
         path:"/now-playing",
         element: (
-            <NowPlaying/>
+            <>
+                <Header />
+                <NowPlaying />
+            </>
         )
-    }
+    },
+    {
+        path: "popular/:id",
+        element: (
+            <>
+                <Header />
+                <Home />
+            </>
+        ),
+    },
 ])
 
 export default router;
