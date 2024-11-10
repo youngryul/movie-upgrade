@@ -100,7 +100,7 @@ const Close = styled.svg`
     position: relative;
     width: 20px;
     height: 20px;
-    left: 350px;
+    left: 90%;
     top: 10px;
 `;
 
