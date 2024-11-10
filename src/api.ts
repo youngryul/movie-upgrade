@@ -31,6 +31,32 @@ export function getPopular() {
         }
     };
 
-    return fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    return fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`, options)
+        .then(res => res.json());
+}
+
+export function getNow() {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZWU5NzUzNDI4ODkyMzhjZjNmMWYwODM3OThiZDhiOSIsIm5iZiI6MTczMDY4NTYxOC42ODQ1MDYyLCJzdWIiOiI2NzI4Mjg0ODI5NzM1ZDZhMDRkYTgyMDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.6txE7lalKwknnEkwMSp95ksz-nLpfj3OvXgwIzx2XH8'
+        }
+    };
+
+    return fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`, options)
+        .then(res => res.json());
+}
+
+export function getComing() {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZWU5NzUzNDI4ODkyMzhjZjNmMWYwODM3OThiZDhiOSIsIm5iZiI6MTczMDY4NTYxOC42ODQ1MDYyLCJzdWIiOiI2NzI4Mjg0ODI5NzM1ZDZhMDRkYTgyMDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.6txE7lalKwknnEkwMSp95ksz-nLpfj3OvXgwIzx2XH8'
+        }
+    };
+
+    return fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
         .then(res => res.json());
 }

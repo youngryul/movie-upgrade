@@ -25,7 +25,7 @@ const Row = styled(motion.div)`
     width: 100%;
 `;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
     display: flex;
     flex-direction: column;
 `;
@@ -96,7 +96,34 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-function Home() {
+const Close = styled.svg`
+    position: relative;
+    width: 20px;
+    height: 20px;
+    left: 350px;
+    top: 10px;
+`;
+
+const boxVar = {
+    show: {
+        y: 20,
+        opacity: 0
+    },
+    hide: (index:number) => ({
+        y: 0,
+        opacity: 1,
+        transition: {
+            delay: index * 0.2,
+            duration: 0.5
+        }
+    }),
+    hover: {
+        scale: 1.2
+    }
+}
+
+
+function Popular() {
     const { data, isLoading } = useQuery<IGetMoviesResult>(["movies", "popular"], getPopular);
     const popularMatch: PathMatch<string> | null = useMatch("/popular/:id");
     const navigate = useNavigate();
@@ -108,13 +135,23 @@ function Home() {
     const clickedMovie = popularMatch?.params.id &&
         data?.results.find((movie) => movie.id === +popularMatch.params.id!);
 
+    const onClose = () => navigate("/");
+
     return (
         <>
             <Wrapper>{isLoading ? <Loader>Loading...</Loader>:
                 <>
                     <Row>
-                          {data?.results.map((movie) => (
-                        <Box>
+                          {data?.results.map((movie, index) => (
+                        <Box
+                            custom={index}
+                            variants={boxVar}
+                            initial="show"
+                            animate="hide"
+                            whileHover="hover"
+                            layoutId={movie.id+""}
+                            key={movie.id}
+                        >
                             <Poster
                                 onClick={() => onBoxClicked(movie.id)}
                                 bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
@@ -133,7 +170,7 @@ function Home() {
                             animate={{ opacity: 1 }}
                         />
                         <BigMovie
-                            layoutId={popularMatch.params.movieId}
+                            layoutId={popularMatch.params.id}
                         >
                             {clickedMovie && (
                                 <>
@@ -144,18 +181,26 @@ function Home() {
                                                 "w500"
                                             )})`,
                                         }}
-                                    />
+                                    >
+                                        <Close
+                                            onClick={onClose}
+                                            data-slot="icon" fill="currentColor" viewBox="0 0 20 20"
+                                               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                  d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"></path>
+                                        </Close>
+                                    </BigCover>
                                     <BigTitle>{clickedMovie.title}</BigTitle>
                                     <BigOverview>{clickedMovie.overview}</BigOverview>
                                 </>
                             )}
                         </BigMovie>
                     </>
-                ):null}
+                ) : null}
             </AnimatePresence>
             </Wrapper>
         </>
     );
 }
 
-export default Home;
+export default Popular;

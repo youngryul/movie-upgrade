@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ComingSoon from "./Pages/ComingSoon";
-import Home from "./Pages/Home";
+import Popular from "./Pages/Popular";
 import NowPlaying from "./Pages/NowPlaying";
 import Header from "./Components/Header";
 
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: (
             <>
                 <Header />
-                <Home />
+                <Popular />
             </>
 
         )
@@ -38,13 +38,31 @@ const router = createBrowserRouter([
         )
     },
     {
-        path: "popular/:id",
+        path: "/popular/:id",
         element: (
             <>
                 <Header />
-                <Home />
+                <Popular />
             </>
         ),
+    },
+    {
+        path: "/coming/:id",
+        element: (
+            <>
+                <Header />
+                <ComingSoon />
+            </>
+        )
+    },
+    {
+        path:"/now/:id",
+        element: (
+            <>
+                <Header />
+                <NowPlaying />
+            </>
+        )
     },
 ])
 
